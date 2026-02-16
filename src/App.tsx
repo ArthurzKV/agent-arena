@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Arena from './pages/Arena';
 import Terminal from './components/Terminal';
@@ -47,6 +47,24 @@ export default function App() {
   const [sidebarWidth, setSidebarWidth] = useState(240);
   const [terminalWidth, setTerminalWidth] = useState(420);
   const [agentPanelHeight, setAgentPanelHeight] = useState(200);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => {
+      const newTheme = prev === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
+      return newTheme;
+    });
+  }, []);
 
   const resizeSidebar = useCallback((delta: number) => {
     setSidebarWidth(w => Math.max(140, Math.min(500, w + delta)));
@@ -62,7 +80,11 @@ export default function App() {
 
   return (
     <div className="app-layout">
-      <div className="titlebar-drag" />
+      <div className="titlebar-drag">
+        <button className="theme-toggle" onClick={toggleTheme}>
+          {theme === 'dark' ? '☀️ LIGHT' : '🌙 DARK'}
+        </button>
+      </div>
       <div className="app-panels">
         <div className="sidebar-container" style={{ width: sidebarWidth }}>
           <Sidebar />

@@ -37,6 +37,9 @@ export interface FightState {
   showOverlay: boolean;
 }
 
+// Module-level — survives HMR and component remounts
+const dismissedOverlays = new Set<string>();
+
 export function useMultiFight() {
   const [fights, setFights] = useState<Map<string, FightState>>(new Map());
   const [gathering, setGathering] = useState<GatheringState | null>(null);
@@ -69,7 +72,7 @@ export function useMultiFight() {
       rightOutput: '',
       leftDone: false,
       rightDone: false,
-      showOverlay: true,
+      showOverlay: !dismissedOverlays.has(fightId),
     };
 
     setFights(prev => new Map(prev).set(fightId, state));
@@ -186,6 +189,7 @@ export function useMultiFight() {
   }, [subscribeFight]);
 
   const dismissOverlay = useCallback((id: string) => {
+    dismissedOverlays.add(id);
     updateFight(id, f => ({ ...f, showOverlay: false }));
   }, [updateFight]);
 

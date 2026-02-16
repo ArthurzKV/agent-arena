@@ -23,12 +23,29 @@
   --font-display: system-ui, -apple-system, sans-serif;
 }
 
+[data-theme="light"] {
+  --bg: #f8f8f8;
+  --bg-card: #ffffff;
+  --bg-code: #f5f5f5;
+  --red: #d32f2f;
+  --red-glow: rgba(211, 47, 47, 0.2);
+  --gold: #d48806;
+  --gold-dim: #c17a0a;
+  --green: #388e3c;
+  --blue: #1976d2;
+  --text: #2c2c2c;
+  --text-dim: #888888;
+  --text-bright: #000000;
+  --border: #e0e0e0;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-display);
   height: 100vh;
   overflow: hidden;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* === APP LAYOUT (3-panel Spacecake style) === */
@@ -43,8 +60,33 @@ body {
   -webkit-app-region: drag;
   height: 38px;
   flex-shrink: 0;
-  background: #080808;
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 14px;
+  gap: 10px;
+}
+
+.theme-toggle {
+  -webkit-app-region: no-drag;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 12px;
+  padding: 4px 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.theme-toggle:hover {
+  border-color: var(--red);
+  color: var(--red);
 }
 
 .app-panels {
@@ -88,11 +130,12 @@ body {
 .sidebar {
   width: 100%;
   flex-shrink: 0;
-  background: #0c0c0c;
+  background: var(--bg);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: background-color 0.3s;
 }
 
 .sidebar.collapsed {
@@ -228,10 +271,18 @@ body {
   transition: all 0.15s;
 }
 
+[data-theme="light"] .sidebar-open-btn {
+  background: rgba(0, 0, 0, 0.04);
+}
+
 .sidebar-open-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: var(--red);
   color: var(--text-bright);
+}
+
+[data-theme="light"] .sidebar-open-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
 }
 
 .file-entry {
@@ -250,6 +301,10 @@ body {
 .file-entry:hover {
   background: rgba(255, 255, 255, 0.04);
   color: var(--text);
+}
+
+[data-theme="light"] .file-entry:hover {
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .file-entry.open > .file-icon.dir {
@@ -280,6 +335,8 @@ body {
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
+  background: var(--bg);
+  transition: background-color 0.3s;
 }
 
 .center-top {
@@ -304,6 +361,7 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--bg-code);
+  transition: background-color 0.3s;
 }
 
 .right-panel-header {
@@ -311,7 +369,8 @@ body {
   align-items: center;
   padding: 8px 14px;
   border-bottom: 1px solid var(--border);
-  background: #0c0c0c;
+  background: var(--bg);
+  transition: background-color 0.3s;
 }
 
 .panel-tab {
@@ -326,6 +385,10 @@ body {
 .panel-tab.active {
   color: var(--text-bright);
   background: rgba(255,255,255,0.05);
+}
+
+[data-theme="light"] .panel-tab.active {
+  background: rgba(0,0,0,0.05);
 }
 
 .right-panel-content {
@@ -357,9 +420,10 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 4px 14px;
-  background: #080808;
+  background: var(--bg);
   border-top: 1px solid var(--border);
   flex-shrink: 0;
+  transition: background-color 0.3s;
 }
 
 .status-item {
@@ -408,6 +472,10 @@ body {
   color: var(--text);
 }
 
+[data-theme="light"] .arena-idle-hint code {
+  background: rgba(0,0,0,0.06);
+}
+
 .fight-ring {
   margin-bottom: 32px;
   border-bottom: 1px solid var(--border);
@@ -428,6 +496,10 @@ body {
   background: rgba(255,255,255,0.02);
   border-radius: 4px;
   border: 1px solid var(--border);
+}
+
+[data-theme="light"] .ring-task-label {
+  background: rgba(0,0,0,0.02);
 }
 
 /* === HEADER === */
@@ -566,6 +638,7 @@ body {
   clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 15%);
   background: var(--bg-card);
   padding: 32px;
+  transition: background-color 0.3s;
 }
 
 /* === RING FLOOR === */
@@ -748,6 +821,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 4px;
   overflow: hidden;
+  transition: background-color 0.3s;
 }
 
 .output-panel-header {
@@ -757,6 +831,7 @@ body {
   padding: 8px 12px;
   border-bottom: 1px solid var(--border);
   background: var(--bg-card);
+  transition: background-color 0.3s;
 }
 
 .output-panel-label {
@@ -817,9 +892,17 @@ body {
   backdrop-filter: blur(8px);
 }
 
+[data-theme="light"] .ko-overlay.knockout {
+  background: rgba(255, 255, 255, 0.92);
+}
+
 .ko-overlay.decision {
   background: rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(8px);
+}
+
+[data-theme="light"] .ko-overlay.decision {
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .ko-text {
@@ -859,6 +942,11 @@ body {
   padding: 16px 24px;
 }
 
+[data-theme="light"] .reasoning {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .dismiss-hint {
   font-size: 12px;
   letter-spacing: 4px;
@@ -887,6 +975,7 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border);
   padding: 16px 24px;
+  transition: background-color 0.3s;
 }
 
 .scorecard-header {
@@ -1127,6 +1216,7 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border);
   padding: 20px;
+  transition: background-color 0.3s;
 }
 
 .fight-record-header {
@@ -1205,7 +1295,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: #0c0c0c;
+  background: var(--bg);
+  transition: background-color 0.3s;
 }
 
 .agent-panel-header {
@@ -1213,8 +1304,9 @@ body {
   align-items: center;
   padding: 0 10px;
   border-bottom: 1px solid var(--border);
-  background: #080808;
+  background: var(--bg);
   flex-shrink: 0;
+  transition: background-color 0.3s;
 }
 
 .agent-panel-tabs {
@@ -1278,7 +1370,13 @@ body {
   border-bottom: 1px solid rgba(255,255,255,0.03);
 }
 
+[data-theme="light"] .agent-row {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
 .agent-row:hover { background: rgba(255,255,255,0.02); }
+
+[data-theme="light"] .agent-row:hover { background: rgba(0,0,0,0.02); }
 
 .agent-indicator { flex-shrink: 0; width: 12px; display: flex; justify-content: center; }
 
@@ -1414,6 +1512,11 @@ body {
   color: var(--gold);
   border: 1px solid rgba(255, 215, 0, 0.2);
   vertical-align: middle;
+}
+
+[data-theme="light"] .agent-type-badge {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(212, 136, 6, 0.3);
 }
 
 .text-blue { color: var(--blue); }
