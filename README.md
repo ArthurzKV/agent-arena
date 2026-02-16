@@ -22,7 +22,8 @@ The whole thing runs locally. No cloud UI, no browser tab — just a desktop app
 
 1. Download the latest DMG from [Releases](https://github.com/ArthurzKV/agent-arena/releases)
 2. Drag **Agent Arena** to Applications
-3. Open Agent Arena
+3. **Right-click** the app → **Open** (required on first launch since the app isn't notarized)
+   - Or run: `xattr -cr /Applications/Agent\ Arena.app`
 
 **Requirement:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code) must be installed and authenticated:
 
