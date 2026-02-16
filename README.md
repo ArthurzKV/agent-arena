@@ -14,7 +14,28 @@ Type `arena-fight "add dark mode"` in the integrated terminal and watch two Clau
 4. A judge evaluates both outputs and declares a winner
 5. You can apply the winning solution to your project with one click
 
-The whole thing runs locally. No cloud UI, no browser tab — just an Electron app with a built-in terminal.
+The whole thing runs locally. No cloud UI, no browser tab — just a desktop app with a built-in terminal.
+
+## Install
+
+1. Download the latest DMG from [Releases](https://github.com/ArthurzKV/agent-arena/releases)
+2. Drag **Agent Arena** to Applications
+3. Open Agent Arena
+
+**Requirement:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code) must be installed and authenticated:
+
+```bash
+npm install -g @anthropic-ai/claude-code
+claude  # follow auth flow
+```
+
+## Usage
+
+In the integrated terminal:
+
+```bash
+arena-fight "implement binary search in Python"
+```
 
 ## Features
 
@@ -27,35 +48,15 @@ The whole thing runs locally. No cloud UI, no browser tab — just an Electron a
 - **Fight history** — past fights are saved locally
 - **Stop/Cancel** — cancel gathering or stop a fight mid-round
 
-## Setup
+## Development
+
+If you want to run from source:
 
 ```bash
 git clone https://github.com/ArthurzKV/agent-arena.git
 cd agent-arena
 npm install
-```
-
-You need [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated:
-
-```bash
-npm install -g @anthropic-ai/claude-code
-claude  # follow auth flow
-```
-
-## Run
-
-```bash
-# Desktop app (Electron + terminal + arena)
 npm run electron
-
-# Web only (no terminal)
-npm run dev
-```
-
-Then in the integrated terminal:
-
-```bash
-arena-fight "implement binary search in Python"
 ```
 
 ## Architecture
