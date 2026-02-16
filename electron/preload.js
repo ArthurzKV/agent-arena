@@ -42,6 +42,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.removeAllListeners('fight-skipped');
     ipcRenderer.removeAllListeners('fight-cancelled');
   },
+  // Model selection
+  setArenaModel: (model) => ipcRenderer.send('set-arena-model', model),
+  getArenaModel: () => ipcRenderer.invoke('get-arena-model'),
   // Claude agent tracking
   onClaudeAgentsUpdate: (callback) => {
     ipcRenderer.on('claude-agents-update', (_event, agents) => callback(agents));

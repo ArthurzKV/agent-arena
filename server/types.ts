@@ -29,6 +29,7 @@ export interface Fight {
   id: string;
   task: string;
   context?: string;
+  model?: string;
   status: 'waiting' | 'gathering' | 'fighting' | 'judging' | 'done' | 'cancelled';
   fighter1: FighterResult | null;
   fighter2: FighterResult | null;

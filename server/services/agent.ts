@@ -20,7 +20,8 @@ export async function runAgent(
   task: string,
   callbacks: AgentCallbacks,
   context?: string,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  model: string = 'haiku'
 ): Promise<{ output: string; timeMs: number }> {
   const start = Date.now();
   const id = randomUUID().slice(0, 8);
@@ -47,7 +48,7 @@ Be concise. Only include files you are modifying. Do NOT create files, do NOT us
     const proc = spawn('claude', [
       '-p', fullPrompt,
       '--output-format', 'text',
-      '--model', 'haiku',
+      '--model', model,
       '--dangerously-skip-permissions',
     ], {
       env,

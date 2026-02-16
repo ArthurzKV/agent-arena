@@ -13,7 +13,7 @@ const abortControllers = new Map<string, AbortController>();
 const liveProgress = new Map<string, { leftChars: number; rightChars: number; leftDone: boolean; rightDone: boolean }>();
 
 router.post('/api/fight', (req: Request, res: Response) => {
-  const { task, context } = req.body;
+  const { task, context, model } = req.body;
   if (!task || typeof task !== 'string') {
     res.status(400).json({ error: 'task is required' });
     return;
@@ -24,6 +24,7 @@ router.post('/api/fight', (req: Request, res: Response) => {
     id,
     task,
     context: typeof context === 'string' ? context : undefined,
+    model: typeof model === 'string' ? model : undefined,
     status: 'waiting',
     fighter1: null,
     fighter2: null,
@@ -136,7 +137,7 @@ async function startFight(fight: Fight) {
         broadcast(fight, 'complete', { agent: 'left', output });
       },
       onError: (msg) => broadcast(fight, 'error', { agent: 'left', message: msg }),
-    }, fight.context, ac.signal),
+    }, fight.context, ac.signal, fight.model || 'haiku'),
     runAgent(fight.task, {
       onProgress: (chars, text) => {
         progress.rightChars = chars;
@@ -147,7 +148,7 @@ async function startFight(fight: Fight) {
         broadcast(fight, 'complete', { agent: 'right', output });
       },
       onError: (msg) => broadcast(fight, 'error', { agent: 'right', message: msg }),
-    }, fight.context, ac.signal),
+    }, fight.context, ac.signal, fight.model || 'haiku'),
   ]);
 
   abortControllers.delete(fight.id);

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import { useMultiFight, type FightState, type GatheringState } from '../hooks/useMultiFight';
 import Octagon from '../components/Octagon';
 import PixelFighter from '../components/PixelFighter';
@@ -121,8 +121,8 @@ function FightRing({ fight, onDismiss, onRemove, onStop, onApply }: { fight: Fig
             )}
           </div>
 
-          <div className="vs-center">
-            <span className="vs-text">{isFighting ? '⚔️' : isVerdict ? '' : 'VS'}</span>
+          <div className="vs-center" style={isFighting ? { width: 0, overflow: 'hidden' } : undefined}>
+            <span className="vs-text">{isFighting ? '' : isVerdict ? '' : 'VS'}</span>
           </div>
 
           <div className="fighter-side right">
@@ -203,6 +203,18 @@ function FightRing({ fight, onDismiss, onRemove, onStop, onApply }: { fight: Fig
 
 export default function Arena() {
   const { fights, gathering, dismissOverlay, removeFight, stopFight, forceTrigger, cancelFight, applySolution } = useMultiFight();
+  const [model, setModel] = useState('haiku');
+
+  useEffect(() => {
+    const api = (window as any).electronAPI;
+    api?.getArenaModel?.().then((m: string) => m && setModel(m));
+  }, []);
+
+  const changeModel = useCallback((m: string) => {
+    setModel(m);
+    const api = (window as any).electronAPI;
+    api?.setArenaModel?.(m);
+  }, []);
 
   const isIdle = fights.length === 0 && !gathering;
 
@@ -213,6 +225,17 @@ export default function Arena() {
           <span className="title-agent">AGENT</span>
           <span className="title-arena">ARENA</span>
         </h1>
+        <div className="model-selector">
+          {['haiku', 'sonnet', 'opus'].map(m => (
+            <button
+              key={m}
+              className={`model-btn ${model === m ? 'active' : ''}`}
+              onClick={() => changeModel(m)}
+            >
+              {m.toUpperCase()}
+            </button>
+          ))}
+        </div>
       </header>
 
       {isIdle && (

@@ -511,12 +511,43 @@ body {
 .arena-title-inline {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 8px;
   font-size: 24px;
   font-weight: 900;
   letter-spacing: 4px;
   text-transform: uppercase;
   line-height: 1;
+}
+
+.model-selector {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.model-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 3px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.model-btn:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+.model-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(255, 215, 0, 0.08);
 }
 
 .title-agent {

@@ -302,7 +302,7 @@ export default function PixelFighter({ side, isActive, isDone, isWinner, isLoser
 
   // Fighters overlap slightly during fight for collision effect
   const baseTranslate = isActive
-    ? side === 'left' ? 20 : -20
+    ? side === 'left' ? 60 : -60
     : 0;
   // Recoil pushes fighter back when hit
   const recoilOffset = recoil

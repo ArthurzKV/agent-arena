@@ -158,7 +158,7 @@ function activateArenaFight(task) {
 
 async function triggerFight(task, context) {
   try {
-    const body = { task };
+    const body = { task, model: selectedModel };
     if (context) body.context = context;
     const res = await fetch(`http://localhost:${PORT}/api/fight`, {
       method: 'POST',
@@ -181,6 +181,7 @@ async function triggerFight(task, context) {
 // to transition from exploring to implementing. This is INDEPENDENT of gathering.
 let arenaFightMode = false; // true = watching for implementation signals to send Escape
 let arenaFightModeTask = ''; // the task being watched
+let selectedModel = 'haiku'; // default model for arena agents
 
 // === Context Gathering ===
 // When arena-fight is detected, we don't trigger immediately.
@@ -393,6 +394,16 @@ ipcMain.on('apply-fight-solution', async (_event, { output, task }) => {
     console.error('[arena] Failed to write winner file:', err);
   }
 });
+
+// Model selection
+ipcMain.on('set-arena-model', (_event, model) => {
+  if (['haiku', 'sonnet', 'opus'].includes(model)) {
+    selectedModel = model;
+    console.log(`[arena] Model set to: ${model}`);
+  }
+});
+
+ipcMain.handle('get-arena-model', () => selectedModel);
 
 ipcMain.on('terminal-resize', (_event, { cols, rows }) => {
   if (ptyProcess) ptyProcess.resize(cols, rows);
