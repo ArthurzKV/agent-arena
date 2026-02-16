@@ -40,7 +40,7 @@ router.post('/api/fight', (req: Request, res: Response) => {
 });
 
 router.get('/api/fight/:id/stream', (req: Request, res: Response) => {
-  const fight = fights.get(req.params.id);
+  const fight = fights.get(req.params.id as string);
   if (!fight) {
     res.status(404).json({ error: 'fight not found' });
     return;
@@ -102,7 +102,7 @@ router.get('/api/active-fights', (_req: Request, res: Response) => {
 
 // Cancel a running fight
 router.post('/api/fight/:id/cancel', (req: Request, res: Response) => {
-  const fight = fights.get(req.params.id);
+  const fight = fights.get(req.params.id as string);
   if (!fight) {
     res.status(404).json({ error: 'fight not found' });
     return;

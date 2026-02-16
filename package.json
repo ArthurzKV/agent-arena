@@ -52,6 +52,9 @@
   "build": {
     "appId": "com.agentarena.app",
     "productName": "Agent Arena",
+    "directories": {
+      "output": "release"
+    },
     "mac": {
       "category": "public.app-category.developer-tools",
       "target": [
@@ -60,16 +63,20 @@
       "icon": null
     },
     "files": [
-      "dist/**/*",
+      "dist/client/**/*",
+      "dist/server/**/*",
       "electron/**/*",
       "server/**/*",
-      "node_modules/**/*",
       "package.json"
     ],
     "extraResources": [
       {
-        "from": "dist/",
-        "to": "dist/"
+        "from": "dist/client",
+        "to": "dist/client"
+      },
+      {
+        "from": "dist/server",
+        "to": "dist/server"
       }
     ]
   }
