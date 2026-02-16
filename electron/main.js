@@ -639,25 +639,38 @@ ipcMain.handle('get-claude-agents', () => {
   }));
 });
 
-app.on('ready', () => {
-  if (!isDev) {
-    startServer();
-  }
-  createWindow();
-  startPty();
-});
-
-app.on('window-all-closed', () => {
-  if (ptyProcess) ptyProcess.kill();
-  if (serverProcess) serverProcess.kill();
+// Single instance lock — prevent multiple app instances
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
   app.quit();
-});
+} else {
+  app.on('second-instance', () => {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+    }
+  });
 
-app.on('activate', () => {
-  if (mainWindow === null) createWindow();
-});
+  app.on('ready', () => {
+    if (!isDev) {
+      startServer();
+    }
+    createWindow();
+    startPty();
+  });
 
-app.on('before-quit', () => {
-  if (ptyProcess) ptyProcess.kill();
-  if (serverProcess) serverProcess.kill();
-});
+  app.on('window-all-closed', () => {
+    if (ptyProcess) ptyProcess.kill();
+    if (serverProcess) serverProcess.kill();
+    app.quit();
+  });
+
+  app.on('activate', () => {
+    if (mainWindow === null) createWindow();
+  });
+
+  app.on('before-quit', () => {
+    if (ptyProcess) ptyProcess.kill();
+    if (serverProcess) serverProcess.kill();
+  });
+}
