@@ -6,6 +6,8 @@ Type `arena-fight "add dark mode"` in the integrated terminal and watch two Clau
 
 ![agent-arena](https://img.shields.io/badge/status-experimental-red) ![electron](https://img.shields.io/badge/electron-desktop-blue) ![claude](https://img.shields.io/badge/powered_by-claude-orange)
 
+![Agent Arena Screenshot](assets/screenshot.png)
+
 ## How it works
 
 1. You type `arena-fight "your task"` in the terminal
