@@ -1,6 +1,6 @@
 {
   "name": "agent-arena",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "UFC-style AI agent competition — two Claude agents fight, one wins",
   "type": "module",
   "main": "electron/main.js",
@@ -60,6 +60,12 @@
       "target": [
         "dmg"
       ],
+      "identity": "Arturo Rios Ponce (X72FQ67Q74)",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "notarize": false,
       "icon": null
     },
     "files": [
